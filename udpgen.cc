@@ -12,7 +12,7 @@
 #
 */
 
-// g++ ./udpgen.cc -o udpgen -lrt
+// g++ -W -Wall ./udpgen.cc -o udpgen -lrt
 
 // sample multicast tx/rx
 // --tx --addr 224.1.1.1 --mcdev eth0 --ver --rate 10
@@ -145,7 +145,7 @@ enum WORKERMODE { MODE_NONE, MODE_RX, MODE_TX };
 struct pktinfo_t {
  uint32_t seq_;
  struct timeval tv_;
-}__attribute__((packed));
+};
 
 // ip v4/v6 addr
 struct ipaddr_t {
@@ -153,8 +153,8 @@ struct ipaddr_t {
   union {
     struct sockaddr_in  v4;
     struct sockaddr_in6 v6;
-  }sin __attribute__((packed));
-}__attribute__((packed));
+  }sin;
+};
 
 // mreq v4/v6 addr
 struct maddr_t {
@@ -162,8 +162,8 @@ struct maddr_t {
   union {
     struct ip_mreq   m4;
     struct ipv6_mreq m6;
-  }mreq __attribute__((packed));
-}__attribute__((packed));
+  }mreq;
+};
 
 #ifdef linux
 int  do_sched (const int, const int);
@@ -590,7 +590,7 @@ inline void show_report()
   const double rate = get_bit_rate(et);
   char str[64];
 
-  fprintf (stderr, "\n%s %4u pkts, %5llu bytes, time %0.4f, %5.2f %s, latency min/avg/max %6.4lf/%6.4lf/%6.4lf ms, timer overruns %llu,", 
+  fprintf (stderr, "\n%s %4u pkts, %5lu bytes, time %0.4f, %5.2f %s, latency min/avg/max %6.4lf/%6.4lf/%6.4lf ms, timer overruns %lu,", 
            current_action, 
            current_packet_count, 
            current_byte_count, 
